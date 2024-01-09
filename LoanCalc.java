@@ -86,7 +86,7 @@ public class LoanCalc {
 		// change the value of loan given by the user while using the function
 		double Loan = loan; 
 		for (int i = 0; i < n; i++) {
-			Loan = (Loan - payment) * (1 + rate); 
+			Loan = (Loan - payment) * (1 + rate / 100); 
 		}
     	return Loan;
 	}
