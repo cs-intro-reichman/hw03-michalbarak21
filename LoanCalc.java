@@ -39,20 +39,47 @@ public class LoanCalc {
 	*/
 	// Side effect: modifies the class variable iterationCounter.
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {  
-    	// Replace the following statement with your code
-    	return 0;
+    	// Sets initial payment as loan/n
+		// while loan is greater than 0, checks if the endBalance we got using current 
+		// payment is smaller than epsilon.
+		// if so- it returns the current payment value
+		// else- it adds epsilon to the current payment value and tries again
+		double payment = loan/n; 
+		while (loan > 0) {
+			if (endBalance(loan, rate, n, payment) < epsilon) {
+				return payment; 
+			} else {
+				payment = payment + epsilon; 
+				iterationCounter++; 
+			}
+		}
+    	return payment;
     }
     
     /**
 	* Uses bisection search to compute an approximation of the periodical payment 
 	* that will bring the ending balance of a loan close to 0.
-	* Given: the sum of theloan, the periodical interest rate (as a percentage),
+	* Given: the sum of the loan, the periodical interest rate (as a percentage),
 	* the number of periods (n), and epsilon, a tolerance level.
 	*/
 	// Side effect: modifies the class variable iterationCounter.
     public static double bisectionSolver(double loan, double rate, int n, double epsilon) {  
-    	// Replace the following statement with your code
-    	return 0;
+		iterationCounter = 0; 
+		double L = 1;  
+		double H = loan;  
+		double payment = loan / 2; 
+		while ( H - L > epsilon) {
+			if (endBalance(loan, rate, n, payment) > 0 ) {
+				L = payment;
+				H = H; 
+			} else {
+				H = payment; 
+				L = L; 
+			}
+			payment = ( H + L ) / 2;
+			iterationCounter++; 
+		}
+    	return payment;
     }
 	
 	/**
@@ -60,7 +87,12 @@ public class LoanCalc {
 	* interest rate (as a percentage), the number of periods (n), and the periodical payment.
 	*/
 	private static double endBalance(double loan, double rate, int n, double payment) {
-		// Replace the following statement with your code
-    	return 0;
+		// Note that we use a different variable Loan in this function, so we couldn't
+		// change the value of loan given by the user while using the function
+		double Loan = loan; 
+		for (int i = 0; i < n; i++) {
+			Loan = (Loan - payment) * (1 + rate); 
+		}
+    	return Loan;
 	}
 }
